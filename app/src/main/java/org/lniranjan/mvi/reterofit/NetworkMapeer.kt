@@ -1,6 +1,7 @@
 package org.lniranjan.mvi.reterofit
 
 import org.lniranjan.mvi.model.Blog
+import org.lniranjan.mvi.room.BlogCacheEntity
 import org.lniranjan.mvi.utility.EntityMapper
 import javax.inject.Inject
 
@@ -23,5 +24,9 @@ class NetworkMapeer @Inject constructor() : EntityMapper<BlogNetworkEntity,Blog>
             image = domainModel.image,
             category = domainModel.category
         )
+    }
+
+    fun mapFromEntityList(entities: List<BlogNetworkEntity>): List<Blog>{
+        return entities.map { mapFromEntity(it) }
     }
 }
