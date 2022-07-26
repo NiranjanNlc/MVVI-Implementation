@@ -44,7 +44,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
     //dagger hilt
-    def hilt_version = "2.28-alpha"
+    def hilt_version = "2.42"
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
 
@@ -72,11 +72,52 @@ dependencies {
     // optional - Paging 3 Integration
     implementation "androidx.room:room-paging:2.5.0-alpha02"
 
-    // Hilt ViewModel
-    implementation "androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03"
-    kapt "androidx.hilt:hilt-compiler:1.0.0-beta01"
+//    // Hilt ViewModel
+//    implementation "androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03"
+//    kapt "androidx.hilt:hilt-compiler:1.0.0-beta01"
 
     //for viewmodel scope
     def fragment_ktx = "1.2.5"
     implementation "androidx.fragment:fragment-ktx:$fragment_ktx"
+
+
 }
+
+    task niranjan() {
+        println( " I am executing the task ")
+        10.times{
+            tasks.register("task$it")
+                    {
+                        doLast {
+                            println " I am executig $it"
+                        }
+                    }
+        }
+        tasks.named("task1"){
+            dependsOn("task3", "task4", "task7")
+        }
+        dependsOn "task1"
+    }
+
+task copyApk( type : Copy)
+{
+    def sourceDir = layout.buildDirectory.dir("intermediates/apk/debug/app-debug.apk")
+    def destDir = "$rootDir/apk"
+    from sourceDir
+    into destDir
+    rename "app-debug.apk","gradle-experiment.apk"
+    doLast
+            {
+                def file = new File(destDir,"gradle-experiment.apk")
+                ant.checksum file: file.path
+            }
+}
+
+    task copy()
+    {
+        dependsOn "copyApk"
+    }
+    tasks.whenTaskAdded {it ->
+        if(it.name == "assembleDebug")
+            it.finalizedBy("copyApk")
+    }
