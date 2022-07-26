@@ -6,7 +6,7 @@ import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.components.SingletonComponent
 import org.lniranjan.mvi.model.Blog
 import org.lniranjan.mvi.reterofit.BlogNetworkEntity
 import org.lniranjan.mvi.reterofit.BlogReterofit
@@ -17,7 +17,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 @Module
-@InstallIn(ApplicationComponent::class)
+@InstallIn(SingletonComponent::class)
 class ReterofitModule {
 
     @Singleton

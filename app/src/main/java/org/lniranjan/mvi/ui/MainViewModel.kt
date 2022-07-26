@@ -22,12 +22,12 @@ class MainViewModel @Inject constructor(
     val dataState: LiveData<DataState<List<Blog>>>
         get() = _dataState
 
-    fun setStateEvent(mainStateEvent: MainStateEvent){
+    fun setStateEvent(mainStateEvent: MainStateEvent) {
         viewModelScope.launch {
-            when(mainStateEvent){
+            when (mainStateEvent) {
                 is MainStateEvent.GetBlogsEvent -> {
                     mainRepository.getBlogs()
-                        .onEach {dataState ->
+                        .onEach { dataState ->
                             _dataState.value = dataState
                         }
                         .launchIn(viewModelScope)
@@ -40,12 +40,11 @@ class MainViewModel @Inject constructor(
         }
     }
 
-}
 
+    sealed class MainStateEvent {
 
-sealed class MainStateEvent{
+        object GetBlogsEvent : MainStateEvent()
 
-    object GetBlogsEvent: MainStateEvent()
-
-    object None: MainStateEvent()
+        object None : MainStateEvent()
+    }
 }

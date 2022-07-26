@@ -3,7 +3,7 @@ package org.lniranjan.mvi.di
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.components.SingletonComponent
 import org.lniranjan.mvi.repository.MainRepository
 import org.lniranjan.mvi.reterofit.BlogReterofit
 import org.lniranjan.mvi.reterofit.NetworkMapeer
@@ -12,7 +12,7 @@ import org.lniranjan.mvi.room.BlogDao
 import javax.inject.Singleton
 
 @Module
-@InstallIn(ApplicationComponent::class)
+@InstallIn(SingletonComponent::class)
 private object RepositoryModule {
 
     @Singleton
