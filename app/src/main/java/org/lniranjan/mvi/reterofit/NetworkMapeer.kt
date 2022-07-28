@@ -1,7 +1,6 @@
 package org.lniranjan.mvi.reterofit
 
 import org.lniranjan.mvi.model.Blog
-import org.lniranjan.mvi.room.BlogCacheEntity
 import org.lniranjan.mvi.utility.EntityMapper
 import javax.inject.Inject
 
